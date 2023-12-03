@@ -1,0 +1,76 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a block.
+ *
+ * Available variables:
+ * - plugin_id: The ID of the block implementation.
+ * - label: The configured label of the block if visible.
+ * - configuration: A list of the block's configuration values.
+ *   - label: The configured label for the block.
+ *   - label_display: The display settings for the label.
+ *   - provider: The module or other provider that provided this block plugin.
+ *   - Block plugin specific settings will also be stored here.
+ * - content: The content of this block.
+ * - attributes: array of HTML attributes populated by modules, intended to
+ *   be added to the main container tag of this template.
+ *   - id: A valid HTML ID and guaranteed unique.
+ * - title_attributes: Same as attributes, except applied to the main title
+ *   tag that appears in the template.
+ * - content_attributes: Same as attributes, except applied to the main content
+ *   tag that appears in the template.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ *
+ * @see template_preprocess_block()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'block',
+    'block-' ~ configuration.provider|clean_class,
+    'block-' ~ plugin_id|clean_class,
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {% block content %}
+    <div{{ content_attributes.addClass('content') }}>
+        <div class="section-header text-center">
+            {% if label %}
+                <h2 class="section-header__title">{{ label }}</h2>
+            {% endif %}
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+        </div>
+        <div class="primary-tabs-style">
+            <ul class="nav nav-tabs" id="conferencesTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="featured-tab" data-bs-toggle="tab" data-bs-target="#featured" type="button" role="tab" aria-controls="featured" aria-selected="true">
+                        <span>Featured</span>Conferences</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="recommended-tab" data-bs-toggle="tab" data-bs-target="#recommended" type="button" role="tab" aria-controls="recommended" aria-selected="false"><span>Recommended</span> Conferences</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="past-tab" data-bs-toggle="tab" data-bs-target="#past" type="button" role="tab" aria-controls="past" aria-selected="false"><span>Past</span> Conferences</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="conferencesTabContent">
+                <div class="tab-pane fade show active" id="featured" role="tabpanel" aria-labelledby="featured-tab">
+                    {{ drupal_view('conference', 'block_1', 'Featured') }}
+                </div>
+                <div class="tab-pane fade" id="recommended" role="tabpanel" aria-labelledby="recommended-tab">
+                    {{ drupal_view('conference', 'block_1', 'Recommended') }}
+                </div>
+                <div class="tab-pane fade" id="past" role="tabpanel" aria-labelledby="past-tab">
+                    {{ drupal_view('conference', 'block_1', 'Past') }}
+                </div>
+            </div>
+        </div>
+    </div>
+  {% endblock %}
+</div>

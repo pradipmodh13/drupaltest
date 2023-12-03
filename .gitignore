@@ -60,3 +60,9 @@
 /drush
 /drupal.phar
 /drupal
+
+# Theme node_modules
+/web/themes/custom/drupal_assignment/node_modules/*
+
+# Composer Lock
+composer.lock

@@ -1,0 +1,29 @@
+@use 'sass:math';
+
+$breakpoints: (
+    'portrait-mobile-max': (
+        max-width: 575px,
+    ),
+    'mobile-max': (
+        max-width: 767px,
+    ),
+    'ipad-max': (
+        max-width: 991px,
+    ),
+    'desktop-max': (
+        max-width: 1199px,
+    ),
+);
+@mixin breakpoint($name) {
+    @if map-has-key($breakpoints, $name) {
+        @media #{inspect(map-get($breakpoints, $name))} {
+            @content;
+        }
+    } @else {
+        @warn "Couldn't find a breakpoint named `#{$name}`.";
+    }
+}
+
+@function toRem($value) {
+    @return math.div($value, 16px) * 1rem; 
+}
